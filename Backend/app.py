@@ -8,8 +8,9 @@ CORS(app)
 api = Api(app)
 
 
-api.add_resource(UsersResource, '/users')
+api.add_resource(UsersResource, "/users")
 
-@app.get('/test')
+
+@app.get("/test")
 def test_route():
-    return "Hello World"
+    return "Hello World 123"
