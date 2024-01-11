@@ -17,6 +17,19 @@ You will find a two folders "Frontend" and "Backend"
 
 
     #Backend
+    #For the first time
+
+    cd Backend
+    python3 - m venv venv
+    venv/scripts/activate
+    pip install -r requirements.txt
+    python3 main.py
+    
+    #From next time
+    venv/scripts/activate
+    pip install -r requirements.txt
+    python3 main.py
+
 
 
 For more refer Jubair
