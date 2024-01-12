@@ -1,14 +1,15 @@
-import { useState } from 'react'
-import {UpcomingTest,PreviousTest,Profile}from './pages/Index'
+import { useState } from "react";
+import { UpcomingTest, PreviousTest, Profile } from "./pages/Index";
+
+import {RouterProvider,Route,Link} from "react-router-dom";
+import { router } from "./router/index";
+
 function App() {
   return (
     <>
-    <h1>hello</h1>
-    <UpcomingTest/>
-    <PreviousTest/>
-    <Profile/>
+      <RouterProvider router={router}/>
     </>
-  )
+  );
 }
 
-export default App
+export default App;

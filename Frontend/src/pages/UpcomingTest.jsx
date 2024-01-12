@@ -2,7 +2,7 @@ import React from 'react'
 
 const UpcomingTest = () => {
   return (
-    <div>Test</div>
+    <div>UpcomingTest</div>
   )
 }
 

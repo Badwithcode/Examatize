@@ -1,2 +1,2 @@
 export * from './ProfileComponent'
-export * from './Header'
+export * from './Navigation'
