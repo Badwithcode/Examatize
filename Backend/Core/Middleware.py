@@ -86,9 +86,9 @@ def is_teacher():
                 if claims["role"] == "teacher":
                     return fn(*args, **kwargs)
                 else:
-                    return "Invalid Access", 401
+                    raise ValueError( "Invalid Access")
             except Exception as e:
-                return f"Error:{e}", 401
+                return {'status':False,'message':f'{e}'}, 401
 
         return decorator
 
