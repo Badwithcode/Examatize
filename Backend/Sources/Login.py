@@ -3,12 +3,19 @@ from flask_restful import Resource
 from Models.Mongodb import users_table
 from Models.Redis import r_conn
 from Core.Middleware import create_access_token, jwt_required, get_identity
+from pydantic import BaseModel, Field, ValidationError
+
+
+class LoginBase(BaseModel):
+    username: str = Field(pattern='^[a-zA-Z0-9._%+-]+@sece\.ac\.in$')
+    password: str = Field(min_length=6)
+
 
 
 class LoginResource(Resource):
     def post(self):
         try:
-            data = request.json
+            data = LoginBase.model_validate(request.json).model_dump() # Data Validation
             # Get value from user
             username = data["username"]
             password = data["password"]
@@ -31,11 +38,16 @@ class LoginResource(Resource):
                 )
                 return {"status": True, "access_token": access_token}, 200
             else:
-                return {"status": "Username Not found"}, 401
+                return {"status": False, 'message':'User Not Found'}, 401
+        except ValidationError as e:
+            return {'status':False, 'message':{
+                'username': 'Should end with @sece.ac.in',
+                'password': 'Has Length moredhan 8'
+            }}
         except KeyError as e:
-            return {"status": "failed", "message": str(e)}, 400
+            return {"status": False, "message": str(e)}, 400
         except Exception as e:
-            return {"status": "failed", "message": str(e)}, 500
+            return {"status": False, "message": str(e)}, 500
 
 
 class LogoutResource(Resource):
