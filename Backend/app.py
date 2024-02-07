@@ -28,6 +28,8 @@ api.add_resource(LoginResource, "/login")
 api.add_resource(TokenResource, '/token')
 api.add_resource(StudentCreateResource, '/addstudent')
 api.add_resource(LogoutResource, "/logout")
+# api.add_resource(LogoutResource, "/logout")
+
 
 
 @app.get("/test")
