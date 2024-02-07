@@ -3,39 +3,45 @@ from flask_restful import Resource
 from Models.Mongodb import users_table
 from Models.Redis import r_conn
 from Core.Middleware import create_access_token, jwt_required, get_identity
+from pydantic import ValidationError
+from Schemas.LoginSchema import LoginBase
+from bcrypt import checkpw
 
 
 class LoginResource(Resource):
     def post(self):
         try:
-            data = request.json
+            data = LoginBase.model_validate(
+                request.json
+            ).model_dump()  # Data Validation
             # Get value from user
-            username = data["username"]
+            email = data["email"]
             password = data["password"]
             # check if user exist in database
-            user = users_table.find_one({"user_name": username})
-            if user == None:
-                return {"status": "Username Not found"}, 401
-            # Get value from database by check the db with username and password
-            username_db = user["user_name"]
-            email_db = user["email"]
-            role_db = user["role"]
-            password_db = user["password"]
-            # Check if username and password is correct
-            if username_db == username and password_db == password:
-                access_token = create_access_token(
-                    identity=email_db, payload={"role": role_db}
-                )
-                r_conn.setex(
-                    f"access_token:{email_db}", time=60 * 60 * 24, value=access_token
-                )
-                return {"status": True, "access_token": access_token}, 200
-            else:
-                return {"status": "Username Not found"}, 401
+            user = users_table.find_one({"email": email})
+            if user != None:
+                if checkpw(password.encode("utf-8"), user["password"]):
+                    role_db = user["role"]
+                    access_token = create_access_token(
+                        identity=email, payload={"role": role_db}
+                    )
+                    r_conn.setex(
+                        f"access_token:{email}", time=60 * 60 * 24, value=access_token
+                    )
+                    return {"status": True, "access_token": access_token}, 200
+            return {"status": False, "message": "User Not Found"}, 401
+        except ValidationError as e:
+            return {
+                "status": False,
+                "message": {
+                    "username": "Should end with @sece.ac.in",
+                    "password": "Has Length moredhan 8",
+                },
+            }
         except KeyError as e:
-            return {"status": "failed", "message": str(e)}, 400
+            return {"status": False, "message": str(e)}, 400
         except Exception as e:
-            return {"status": "failed", "message": str(e)}, 500
+            return {"status": False, "message": str(e)}, 500
 
 
 class LogoutResource(Resource):
