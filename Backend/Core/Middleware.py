@@ -4,11 +4,7 @@ import os
 import time
 from functools import wraps
 from flask import request
-<<<<<<< HEAD
-
-=======
 from Models.Redis import r_conn
->>>>>>> ea3d47b221642f9ea068505dc81786f8e43b0163
 
 load_dotenv()
 
