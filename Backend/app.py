@@ -1,11 +1,6 @@
 from flask import Flask
 from flask_cors import CORS
 from flask_restful import Api
-<<<<<<< HEAD
-from Sources.Users import UsersResource
-from Sources.Login import LoginResource
-from schema.studentSchema import add_user
-=======
 
 from Sources import (
     LoginResource,
@@ -15,7 +10,6 @@ from Sources import (
     TokenResource,
     UsersResource,
 )
->>>>>>> ea3d47b221642f9ea068505dc81786f8e43b0163
 
 app = Flask(__name__)
 CORS(app)
