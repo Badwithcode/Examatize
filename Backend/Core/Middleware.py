@@ -36,7 +36,7 @@ def get_claims(token: str) -> dict:
     try:
         payload = jwt.decode(jwt=token, key=SECRET_KEY, algorithms=JWT_ALGORITHM)
         exist_token = r_conn.get(f'access_token:{payload["sub"]}')
-        if exist_token != token.encode("utf-8"):
+        if exist_token != token.encode('utf-8'):
             raise Exception("Invalid/Old Token")
         return payload
     except jwt.exceptions.InvalidSignatureError:
@@ -46,7 +46,7 @@ def get_claims(token: str) -> dict:
     except jwt.exceptions.ExpiredSignatureError:
         raise ValueError("Token Expired")
     except Exception as e:
-        raise Exception(f"{e}")
+        raise Exception(f'{e}')
 
 
 def is_bearer(auth_token):
@@ -90,9 +90,9 @@ def is_teacher():
                 if claims["role"] == "teacher":
                     return fn(*args, **kwargs)
                 else:
-                    raise ValueError("Invalid Access")
+                    raise ValueError( "Invalid Access")
             except Exception as e:
-                return {"status": False, "message": f"{e}"}, 401
+                return {'status':False,'message':f'{e}'}, 401
 
         return decorator
 
@@ -109,9 +109,9 @@ def is_student():
                 if claims["role"] == "student":
                     return fn(*args, **kwargs)
                 else:
-                    raise ValueError("Invalid Access")
+                    raise ValueError( "Invalid Access")
             except Exception as e:
-                return {"status": False, "message": f"{e}"}, 401
+                return {'status':False,'message':f'{e}'}, 401
 
         return decorator
 
@@ -128,9 +128,9 @@ def is_admin():
                 if claims["role"] == "admin":
                     return fn(*args, **kwargs)
                 else:
-                    raise ValueError("Invalid Access")
+                    raise ValueError( "Invalid Access")
             except Exception as e:
-                return {"status": False, "message": f"{e}"}, 401
+                return {'status':False,'message':f'{e}'}, 401
 
         return decorator
 
@@ -146,8 +146,7 @@ def jwt_required():
                 claims = get_claims(token)
                 return fn(*args, **kwargs)
             except Exception as e:
-                return {"status": False, "message": f"{e}"}, 401
+                return {'status':False,'message':f'{e}'}, 401
 
         return decorator
-
     return wrapper
