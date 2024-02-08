@@ -1,6 +1,6 @@
 ## Endpoints 
 
-'/login'
+'/login'    <b>completed</b>
 
     LoginResource
         login api to authenticat ethe users.
@@ -22,10 +22,10 @@
             }
 
 
-'/token'
+'/token' <b>completed</b>
 
     TokenResource
-        header: ['Authentication'] send token
+        header: ['Autherization'] send token
             format: 'bearer ${localstorage.getItem('token)}'
         response:{
             "role": "teacher",
@@ -35,3 +35,39 @@
             "status": true
         }
         
+
+'/profile' <b>Rizwan need to complete it</b>
+
+    UserResource
+        header: ['Autherization'] send token
+            format: 'bearer ${localstorage.getItem('token)}'
+        response:{
+            Try to display the every content of the user except the password
+        }
+
+'/upcoming' <b>Rizwan need to complete it</b>
+
+    UpcomingTestResource
+         header: ['Autherization'] send token
+            format: 'bearer ${localstorage.getItem('token)}'
+        response:{
+            Display the test Details fully which time is less thn current time -> do it using filter(aggregate)
+        }
+
+'/tests' <b>Rizwan need to complete it</b>
+
+    TestResource
+        header: ['Autherization'] send token
+            format: 'bearer ${localstorage.getItem('token)}'
+        response:{
+            Display the test Details fully (every tests)
+        }
+
+'/completed' <b>Rizwan need to complete it</b>
+
+    CompletedTestResource
+        header: ['Autherization'] send token
+            format: 'bearer ${localstorage.getItem('token)}'
+        response:{
+           Will discuss later
+        }
