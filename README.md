@@ -20,7 +20,7 @@ You will find a two folders "Frontend" and "Backend"
     #For the first time
 
     cd Backend
-    python3 - m venv venv
+    python3 -m venv venv
     venv/scripts/activate
     pip install -r requirements.txt
     python3 main.py
@@ -31,5 +31,5 @@ You will find a two folders "Frontend" and "Backend"
     python3 main.py
 
 
-
+sudo service redis-server start
 For more refer Jubair

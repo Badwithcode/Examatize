@@ -1,0 +1,21 @@
+image: python:3.9.7
+
+pipelines:
+  default:
+    - step:
+        name: Test and Run Backend
+        caches:
+          - pip
+        script:
+          - cd Backend
+          - echo "Setting up environment variables"
+          - echo "secret_key=\"$SECRET_KEY\"" >> .env
+          - echo "jwt_algorithm=\"$JWT_ALGORITHM\"" >> .env
+          - echo "mongodb_uri=\"$MONGODB_URI\"" >> .env
+          - echo "redis_host=\"$REDIS_HOST\"" >> .env
+          - echo "redis_port=$REDIS_PORT" >> .env
+          - export $(cat .env | xargs)
+          - pip install -r requirements.txt
+          - FLASK_ENV=production pip install -r requirements.txt
+          - pip install gunicorn
+          - gunicorn -b 0.0.0.0:5000 app:app
